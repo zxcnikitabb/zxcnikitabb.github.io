@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Для тебя, моя любовь</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Segoe UI', 'Arial', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            border-radius: 70px;
+            padding: 40px 30px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .photo-frame {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: #ffe0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            font-size: 80px;
+            line-height: 180px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #c62828;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #4a2e2e;
+            margin-bottom: 25px;
+        }
+
+        .love-btn {
+            background: #ff3366;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #941e3c;
+            transition: 0.07s linear;
+            width: 80%;
+        }
+
+        .love-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #941e3c;
+        }
+
+        .hidden-message {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #b82e2e;
+            background: #fff0f0;
+            padding: 12px;
+            border-radius: 50px;
+            display: none;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatUp 2.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-500px) scale(1.2); opacity: 0; }
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #5e3a3a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="photo-frame" id="photoFrame">
+        <img id="userPhoto" src="" alt="Наше фото">
+    </div>
+
+    <h1>Для тебя ❤️</h1>
+    <p>Ты — самое лучшее, что случалось в моей жизни.<br>Каждый день с тобой — это подарок.</p>
+
+    <button class="love-btn" id="magicLoveBtn">Нажми сюда 💕</button>
+
+    <div class="hidden-message" id="loveMessage">
+        Ты — моё всё! Я тебя очень сильно люблю ❤️
+    </div>
+    <footer>нажми на кнопку — пойдёт дождь из сердечек ✨</footer>
+</div>
+
+<script>
+    // ⚠️ ВСТАВЬ ССЫЛКУ НА ФОТО В КАВЫЧКИ НИЖЕ ⚠️
+    const PHOTO_URL = "ССЫЛКУ_НА_ФОТО_ВСТАВЬ_СЮДА";
+
+    const imgElement = document.getElementById('userPhoto');
+    if (PHOTO_URL && PHOTO_URL !== "ССЫЛКУ_НА_ФОТО_ВСТАВЬ_СЮДА") {
+        imgElement.src = PHOTO_URL;
+    } else {
+        const frame = document.getElementById('photoFrame');
+        frame.innerHTML = '<div class="photo-placeholder">💑</div>';
+    }
+
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        const symbols = ['❤️', '💖', '💗', '💓', '💕', '💞', '❣️', '🧡', '💘', '💝'];
+        heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = (1 + Math.random() * 2) + 'rem';
+        heart.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+
+    function startFireworks() {
+        document.getElementById('loveMessage').style.display = 'block';
+        for (let i = 0; i < 45; i++) {
+            setTimeout(() => createHeart(), i * 60);
+        }
+        setTimeout(() => {
+            for (let i = 0; i < 20; i++) setTimeout(() => createHeart(), i * 50);
+        }, 800);
+    }
+
+    document.getElementById('magicLoveBtn').addEventListener('click', startFireworks);
+</script>
+</body>
+</html>
